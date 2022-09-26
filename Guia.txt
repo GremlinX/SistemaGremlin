@@ -1,0 +1,24 @@
+https://www.bezkoder.com/react-node-express-mongodb-mern-stack/
+https://axios-http.com/ptbr/docs/example
+
+
+MANUAL DE INSTRUÇÕES
+Arquivo: /app/index 
+- É onde será renderizado os componentes;
+
+Arquivo: /pages
+- É a página em si; 
+- É o container de toda a página;
+- Nela é permitido entrar os componentes;
+
+Arquivo: /api/index 
+- É o controller das rotas.
+- Atualmente o código passa um trecho de URL 
+para executar 
+- A api é chamada dentro das /pages
+
+## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## 
+
+ORDEM DE CONSTRUÇÃO DO SISTEMA:
+- pages > componentes > api 
+- situacional component App()
