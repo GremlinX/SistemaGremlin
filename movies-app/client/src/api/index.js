@@ -4,7 +4,7 @@ const api = axios.create({
     baseURL: 'http://localhost:3000/api',
 })
 
-export const getAllPacientes = () => api.get(`/lista-pacientes`);
+export const getAllPacientes = () => api.get(`/lista`)
 
 export const insertMovie = payload => api.post(`/movie`, payload)
 export const getAllMovies = () => api.get(`/movies`)

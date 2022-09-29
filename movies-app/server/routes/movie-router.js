@@ -4,7 +4,13 @@ const MovieCtrl = require('../controllers/movie-ctrl')
 
 const router = express.Router()
 
-router.get('/lista-pacientes', MovieCtrl.getAllPacientes)
+//Lista Pacientes
+router.get('/lista', MovieCtrl.getAllPacientes)
+
+// Recepcionista
+router.get('/recepcionista')
+
+// Testes
 router.post('/movie', MovieCtrl.createMovie)
 router.put('/movie/:id', MovieCtrl.updateMovie)
 router.delete('/movie/:id', MovieCtrl.deleteMovie)
