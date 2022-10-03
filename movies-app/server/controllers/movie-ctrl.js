@@ -1,4 +1,5 @@
-const Movie = require('../models/movie-models')
+const Movie = require('../models/movie-models');
+const Paciente = require('../models/paciente-models');
 
 getAllPacientes = async (req, res) => {
     await Movie.find({}, (err, movies) => {
@@ -8,12 +9,65 @@ getAllPacientes = async (req, res) => {
         if (!movies.length) {
             return res
                 .status(404)
-                .json({ success: false, error: `Movie not found` })
+                .json({ success: false, error: `Paciente(s) não encontrado(s)...` })
         }
         return res.status(200).json({ success: true, data: movies })
-    }).clone().catch(err => console.log(err))
+    }).catch(err => console.log(err))
 }
 
+createPaciente = (req, res) => {
+    const novoPaciente = new Paciente({
+        nome: req.body.nomeCompleto,
+        nascimento: req.body.dataNascimento,
+        NomeDaMae: req.body.nomeMae,
+        CPF: req.body.docCpf,
+        CartaoSUS: req.body.susCard
+    });
+    // console.log("Paciente: " + novoPaciente)
+    
+    if (!novoPaciente) {
+        return res.status(400).json({
+            success: false,
+            error: 'Algo deu errado ao obter dados do formulário...',
+        })
+    }
+
+    const paciente = new Paciente(novoPaciente)
+
+    if (!paciente) {
+        return res.status(400).json({ success: false, error: err })
+    }
+    
+    Paciente.findOne({
+        CPF: req.body.doccpf
+    }, function (err, foundPacient) {
+        if(foundPacient) {
+            return res.status(400).json({
+                success: false, 
+                message: 'Paciente já cadastrado no sistema!'
+            })
+        } else {
+            paciente.save()
+            .then(() => {
+                return res.status(201).json({
+                    success: true,
+                    id: novoPaciente._id,
+                    message: 'Paciente cadastrado com sucesso!',
+                })
+            })
+            .catch(error => {
+                return res.status(400).json({
+                    error,
+                    message: 'Paciente não foi cadastrado!',
+                })
+            })
+        }
+    })
+}
+
+
+
+// Testes
 createMovie = (req, res) => {
     const body = req.body
 
@@ -136,5 +190,6 @@ module.exports = {
     deleteMovie,
     getMovies,
     getMovieById,
-    getAllPacientes
+    getAllPacientes,
+    createPaciente
 }

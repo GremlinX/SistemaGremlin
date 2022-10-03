@@ -5,6 +5,7 @@ const api = axios.create({
 })
 
 export const getAllPacientes = () => api.get(`/lista`)
+export const insertPaciente = payload => api.post(`/recepcionista/cadastrar`, payload)
 
 export const insertMovie = payload => api.post(`/movie`, payload)
 export const getAllMovies = () => api.get(`/movies`)
@@ -14,6 +15,7 @@ export const getMovieById = id => api.get(`/movie/${id}`)
 
 const apis = {
     getAllPacientes,
+    insertPaciente,
 
     insertMovie,
     getAllMovies,

@@ -9,6 +9,7 @@ router.get('/lista', MovieCtrl.getAllPacientes)
 
 // Recepcionista
 router.get('/recepcionista')
+router.post('/recepcionista/cadastrar', MovieCtrl.createPaciente)
 
 // Testes
 router.post('/movie', MovieCtrl.createMovie)

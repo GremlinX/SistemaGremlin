@@ -78,7 +78,7 @@ function NavBar() {
 	
     return (
 		<>
-		<style type="text/css">
+		{/* <style type="text/css">
 		{`
 			.nav-link {
 				font-size: 25px; 
@@ -87,7 +87,7 @@ function NavBar() {
 				color: white;
 			}
 		`}
-		</style>
+		</style> */}
 		{[false].map((expand) => (
 			<Navbar key={expand} bg="light" expand={expand} className="mb-3">
 				<Container fluid>
@@ -120,8 +120,18 @@ function NavBar() {
 									</Link>
 								</Nav.Link>
 								<Nav.Link>
+									<Link to='/patch-notes' className="nav-link">
+										Patch Notes
+									</Link>
+								</Nav.Link>
+								<Nav.Link>
 									<Link to='/lista-pacientes' className="nav-link">
 										Lista de pacientes
+									</Link>
+								</Nav.Link>
+								<Nav.Link>
+									<Link to='/recepcionista' className="nav-link">
+										Recepcionista
 									</Link>
 								</Nav.Link>
 								<NavDropdown
@@ -150,7 +160,7 @@ function NavBar() {
 							<Button variant="outline-success">Search</Button>
 							</Form>
 						</Offcanvas.Body>
-						<div style={{border: 'black', color: 'blue', textAlign: 'center', fontSize: '40px'}}>TE AMO CAROL FELIX</div>
+						{/* <div style={{border: 'black', color: 'blue', textAlign: 'center', fontSize: '40px'}}>TE AMO CAROL FELIX</div> */}
 					</Navbar.Offcanvas>
 				</Container>
 			</Navbar>
