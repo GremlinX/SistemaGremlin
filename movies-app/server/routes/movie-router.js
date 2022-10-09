@@ -6,6 +6,7 @@ const router = express.Router()
 
 //Lista Pacientes
 router.get('/lista', MovieCtrl.getAllPacientes)
+router.delete('/lista-pacientes/:id', MovieCtrl.deletePaciente)
 
 // Recepcionista
 router.get('/recepcionista')

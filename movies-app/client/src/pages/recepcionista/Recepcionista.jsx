@@ -30,9 +30,16 @@ function Recepcionista() {
         setPaciente({ ...paciente, [name]: value})
     }
 
+    const [validated, setValidated] = useState(false);
+    
     function handleSubmit(e){
-        e.preventDefault();
-        console.log(paciente); // Verificar o motivo de estar retornando vazio.
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        setValidated(true);
+
         async function postPaciente(){
             await api.insertPaciente(paciente)
             .then(res => {
@@ -48,11 +55,11 @@ function Recepcionista() {
     return (
         <React.Fragment>
             <prontuario-recepcionista>
-                <form onSubmit={handleSubmit}>
+                <Form  noValidate validated={validated} onSubmit={handleSubmit}>
                     <Container fluid>
                         <Row>
                             <h2 className={styles.pageTitle} style={{color: '#fff', padding: '1rem'}}>Preencha os dados do paciente: </h2>
-                            <Col xs='12'>
+                            <Form.Group as={Col} xs="12" controlId="validationCustom01">
                                 <FloatingLabel
                                     controlId="floatingInput"
                                     label="Nome:"
@@ -67,9 +74,13 @@ function Recepcionista() {
                                         autoComplete="off" 
                                         required={true}
                                     />
+                                    <Form.Control.Feedback>Nome válido!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Insira uma nome válido!
+                                    </Form.Control.Feedback>
                                 </FloatingLabel>
-                            </Col>
-                            <Col xs='12' md='3' sm='6'>
+                            </Form.Group>
+                            <Form.Group as={Col} xs='12' md='3' sm='6' controlId="validationCustom02">
                                 <FloatingLabel
                                     controlId="floatingInput"
                                     label="Data de nascimento:"
@@ -85,9 +96,13 @@ function Recepcionista() {
                                         autoComplete="off" 
                                         required={true}
                                     ></Form.Control>
+                                    <Form.Control.Feedback>Data válida!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Insira uma data válida!
+                                    </Form.Control.Feedback>
                                 </FloatingLabel>
-                            </Col>
-                            <Col xs='12' md='3' sm='6'>
+                            </Form.Group>
+                            <Form.Group as={Col} xs='12' md='3' sm='6' controlId="validationCustom03">
                                 <FloatingLabel
                                     controlId="floatingInput"
                                     label="Nome da mãe:"
@@ -102,9 +117,13 @@ function Recepcionista() {
                                         autoComplete="off" 
                                         required 
                                     />
+                                    <Form.Control.Feedback>Nome válido!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Insira um nome válido!
+                                    </Form.Control.Feedback>
                                 </FloatingLabel>
-                            </Col>
-                            <Col xs='12' md='3' sm='6'>
+                            </Form.Group>
+                            <Form.Group as={Col} xs='12' md='3' sm='6' controlId="validationCustom04">
                                 <FloatingLabel
                                     controlId="floatingInput"
                                     label="CPF:"
@@ -120,9 +139,13 @@ function Recepcionista() {
                                         autoComplete="off" 
                                         required={true} 
                                     />
+                                    <Form.Control.Feedback>CPF válido!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Insira um CPF válido!
+                                    </Form.Control.Feedback>
                                 </FloatingLabel>
-                            </Col>
-                            <Col xs='12' md='3' sm='6'>
+                            </Form.Group>
+                            <Form.Group as={Col} xs='12' md='3' sm='6' controlId="validationCustom05">
                                 <FloatingLabel
                                     controlId="floatingInput"
                                     label="Cartão SUS:"
@@ -137,12 +160,16 @@ function Recepcionista() {
                                         autoComplete="off" 
                                         required={true}  
                                     />
+                                    <Form.Control.Feedback>Numeração válida!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Numeração do cartão inválido.
+                                    </Form.Control.Feedback>
                                 </FloatingLabel>
-                            </Col>
+                            </Form.Group>
                         </Row>
                         <Button size="lg" type="submit">Cadastrar</Button>
                     </Container>
-                </form>
+                </Form>
             </prontuario-recepcionista>
         </React.Fragment>
     )

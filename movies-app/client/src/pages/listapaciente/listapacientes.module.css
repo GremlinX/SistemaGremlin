@@ -1,4 +1,5 @@
 .pageTitle {
+    text-align: center;
     margin: 0 30% 1rem 30%;
     color: white;
 }
@@ -6,4 +7,9 @@
 /* Spinner */
 .carregandoInformacoes {
     color: white;
+}
+
+/* Grade */
+.btnAcoes{
+    display: flex;
 }

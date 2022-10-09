@@ -1,52 +1,30 @@
 import React, { useEffect, useState } from "react";
+
+//Bootstrap
 import Container from "react-bootstrap/esm/Container";
 import Row from 'react-bootstrap/esm/Row';
-import Col from "react-bootstrap/esm/Col";
+// import Col from "react-bootstrap/esm/Col";
 import Button from 'react-bootstrap/esm/Button';
+import Form from 'react-bootstrap/esm/Form'
 import Spinner from 'react-bootstrap/Spinner';
 
 // CSS Local
 import styles from './listapacientes.module.css';
 
 // COMPONENTES
-import BarraPesquisa from '../../components/barrapesquisa/BarraPesquisa'
+import ModalBox from '../../components/modal/Modal';
 
 // Axios
-import api, { getAllPacientes } from "../../api"; //Configurar exemplo depois neste arquivo
+import api from "../../api";
 
 function ListaPacientes(){
 
     const [loading, setLoading] = useState(false);
     const [pacientes, setPacientes] = useState([]);
-
-    // https://dev.to/darkmavis1980/fetching-data-with-react-hooks-and-axios-114h
+    const [filteredResults, setFilteredResults] = useState('');
+    const [confirmModal, setConfirmModal] = useState({ isOpen: false, idx: '', nomePaciente: ''});
     
-    // componentDidMount = async () => {
-    //     this.setState({ isLoading: true })
-
-    //     await api.getAllMovies().then(movies => {
-    //         this.setState({
-    //             movies: movies.data.data,
-    //             isLoading: false,
-    //         })
-    //     })
-    // }
-
-    // useEffect(() => {
-    //     const fetchData = async () =>{
-    //       setLoading(true);
-    //       try {
-    //         const {data: response} = await axios.get('/stuff/to/fetch');
-    //         setData(response);
-    //       } catch (error) {
-    //         console.error(error.message);
-    //       }
-    //       setLoading(false);
-    //     }
     
-    //     fetchData();
-    //   }, []);
-
     useEffect(() => {
         const fetchData = async () =>{
             setLoading(true);
@@ -54,6 +32,7 @@ function ListaPacientes(){
                 const {data: response} = await api.getAllPacientes()
                 // console.log(response.data)
                 setPacientes(response.data)
+                setFilteredResults(response.data)
             } catch (error){
                 console.error(error.message)
             }
@@ -62,8 +41,32 @@ function ListaPacientes(){
         fetchData();
     }, []);
 
-    return(
+    const handleSearch = (event) => {
+        setFilteredResults(event.currentTarget.value)
+        if(event.currentTarget.value === '') {
+            setFilteredResults(pacientes)
+            return ;
+        }
+        const pacientesFiltrados = pacientes.filter((query) => 
+            (query.nome).toLowerCase().indexOf((event.currentTarget.value).toLowerCase()) !== -1
+        );
+        setFilteredResults(pacientesFiltrados); 
+    };
+    
+    const deletePaciente = async(id) => {
+        console.log('Exlcuindo paciente: '+ id)
+        // e.preventDefault();
+        setLoading(true);
+        api.deletePacienteById(id)
+        window.location.reload()
+        setLoading(false);
+        setConfirmModal({isOpen: false, idx: ''});
+    }
+
+    return (
         <prontuario-lista-paciente>
+            <ModalBox open={confirmModal} close={setConfirmModal} onDelete={deletePaciente}/>
+
             {loading && (
                 <prontuario-lista-paciente-carregando>
                     <Spinner variant="light" animation="border" role="status">
@@ -71,27 +74,23 @@ function ListaPacientes(){
                     </Spinner>
                     <div className={styles.carregandoInformacoes}>Carregando as informações...</div>
                 </prontuario-lista-paciente-carregando>
-            )}
+            )} 
+
             {!loading && (
-                <React.Fragment>
+                <prontuario-lista-paciente-visualizacao>
                     <h1 className={styles.pageTitle}><i className="far fa-list-alt"></i> LISTA DE PACIENTES</h1>
                     <Container fluid>
-                        <BarraPesquisa
-                        type='search'
-                        name='searchPacient'
-                        placeholder='Encontrar paciente'
+                        <Form.Control className='mb-3' 
+                            name="text" type="text" 
+                            onChange={handleSearch} placeholder='Pesquisar'
+                            autoComplete="off"    
                         />
-                    </Container>
-                    {/* A partir daqui já podemos separar em um component
-                    Talvez reaproveitar do projeto 'my-app' */}
-                    
-                    <Container fluid>
                         <Row>
                             <div className="table-responsive">
                                 <table className="table table-striped table-dark align-middle">
                                     <thead>
                                         <tr>
-                                            <th scope="col table-custom">ID</th>
+                                            {/* <th scope="col table-custom">ID</th> */}
                                             <th scope="col table-custom">NOME</th>
                                             <th scope="col">DATA DE NASCIMENTO</th>
                                             <th scope="col">NOME DA MÃE</th>
@@ -102,19 +101,28 @@ function ListaPacientes(){
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {pacientes.map((element, index) => 
-                                        <tr>
-                                            <th scope="row"></th>
-                                            <td name="nome">{pacientes && pacientes[0].name}</td>
-                                            <td className='date' name="idade"></td>
-                                            <td name='nomeDaMae'></td>
-                                            <td className='cpf'></td>
-                                            <td></td>
+                                    {filteredResults && filteredResults.map((element, index) => 
+                                        <tr key={element._id}>
+                                            {/* <th scope="row">{element._id}</th> */}
+                                            <td name="nome">{element.nome}</td>
+                                            <td className='date' name="idade">{element.nascimento}</td>
+                                            <td name='nomeDaMae'>{element.NomeDaMae}</td>
+                                            <td className='cpf'>{element.CPF}</td>
+                                            <td>{element.CartaoSUS}</td>
                                             <td>
-                                                <Button size="sm" variant='outline-warning'><i className="fas fa-edit"></i></Button>
-                                                <Button size="sm" variant='outline-danger'><i className="fas fa-trash"></i></Button>
+                                                <div className={styles.btnAcoes}>
+                                                    <Button size="sm" variant='outline-warning'><i className="fas fa-edit"></i></Button>
+                                                    <Button 
+                                                        id={element._id} 
+                                                        name={element.nome} 
+                                                        size="sm" 
+                                                        variant='outline-danger' 
+                                                        onClick={() => setConfirmModal({isOpen: true, idx: element._id, nomePaciente: element.nome})}>
+                                                        <i className="fas fa-trash"></i>
+                                                    </Button>
+                                                </div>
                                             </td>
-                                            {/* <td><%=newPatient.createdAt%></td> */}
+                                            {/* <td>{element.createdAt}</td> */}
                                         </tr>
                                     )}
                                     </tbody>
@@ -122,7 +130,7 @@ function ListaPacientes(){
                             </div>
                         </Row>
                     </Container>
-                </React.Fragment>
+                </prontuario-lista-paciente-visualizacao>
             )}
         </prontuario-lista-paciente>
     )

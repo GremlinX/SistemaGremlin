@@ -2,17 +2,19 @@ const Movie = require('../models/movie-models');
 const Paciente = require('../models/paciente-models');
 
 getAllPacientes = async (req, res) => {
-    await Movie.find({}, (err, movies) => {
+    await Paciente.find({}, (err, paciente) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!movies.length) {
+        if (!paciente.length) {
             return res
-                .status(404)
-                .json({ success: false, error: `Paciente(s) não encontrado(s)...` })
+                .status(200)
+                .json({ success: false, error: `Não há pacientes cadastrados!` })
         }
-        return res.status(200).json({ success: true, data: movies })
-    }).catch(err => console.log(err))
+        // Aqui fornece os dados para o front end
+        // Corrigir o retorno de todas as informações ao invés do necessário
+        return res.status(200).json({ success: true, data: paciente })
+    }).clone().catch(err => console.log(err))
 }
 
 createPaciente = (req, res) => {
@@ -63,6 +65,22 @@ createPaciente = (req, res) => {
             })
         }
     })
+}
+
+deletePaciente = async (req, res) => {
+    await Paciente.findOneAndDelete({ _id: req.params.id }, (err, paciente) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!paciente) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Paciente não encontrado` })
+        }
+
+        return res.status(200).json({ success: true, data: paciente })
+    }).catch(err => console.log(err))
 }
 
 
@@ -191,5 +209,6 @@ module.exports = {
     getMovies,
     getMovieById,
     getAllPacientes,
-    createPaciente
+    createPaciente,
+    deletePaciente
 }
