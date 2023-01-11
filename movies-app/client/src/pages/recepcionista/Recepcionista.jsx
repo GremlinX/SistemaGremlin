@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
 import Form from "react-bootstrap/esm/Form";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from "react-bootstrap/esm/Button";
@@ -11,8 +12,8 @@ import styles from './recepcionista.module.css';
 // COMPONENTES
 
 // Axios
-import api, { insertPaciente } from "../../api"; //Configurar exemplo depois neste arquivo
-import Col from "react-bootstrap/esm/Col";
+import api from "../../api";
+
 
 function Recepcionista() {
 

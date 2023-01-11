@@ -14,7 +14,7 @@ function ModalBox(props) {
                 <Modal.Title>CONFIRMAR EXCLUSÃO</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                A exclusão do paciente {props.open.nomePaciente} é irreversível.
+                A exclusão do paciente <u>{props.open.nomePaciente}</u> é irreversível.
                 <br/>
                 Deseja realmente excluir?
             </Modal.Body>

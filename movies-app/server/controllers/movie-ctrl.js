@@ -13,7 +13,9 @@ getAllPacientes = async (req, res) => {
         }
         // Aqui fornece os dados para o front end
         // Corrigir o retorno de todas as informações ao invés do necessário
-        return res.status(200).json({ success: true, data: paciente })
+        return res
+            .status(200)
+            .json({ success: true, data: paciente })
     }).clone().catch(err => console.log(err))
 }
 
@@ -41,7 +43,7 @@ createPaciente = (req, res) => {
     }
     
     Paciente.findOne({
-        CPF: req.body.doccpf
+        CPF: req.body.doCCpf // req.body.docCpf
     }, function (err, foundPacient) {
         if(foundPacient) {
             return res.status(400).json({

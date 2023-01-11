@@ -1,0 +1,11 @@
+.title{
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.btnCadastrar{
+    display: flex;
+    margin: auto;
+
+}

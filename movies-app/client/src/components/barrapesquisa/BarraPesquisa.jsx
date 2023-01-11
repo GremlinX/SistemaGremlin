@@ -2,9 +2,8 @@ import React from "react";
 
 // Bootstrap
 import Button from "react-bootstrap/esm/Button";
+import Form from "react-bootstrap/esm/Form";
 
-// Components
-import InputPesquisa from './InputPesquisa';
 
 function BarraPesquisa(props){
 
@@ -13,11 +12,7 @@ function BarraPesquisa(props){
             <form className="row g-3">
                 <div className="col-auto search-field">
                     <div className="input-group col-md-4">
-                        <InputPesquisa
-                            type={props.type}
-                            name={props.name}
-                            placeholder={props.placeholder}
-                        />
+                    <Form.Control className="form-control" name={props.name} type={props.type} placeholder={props.placeholder}/>
                         <Button variant="light" type="submit" value="Procurar">Procurar</Button>
                     </div>
                 </div>

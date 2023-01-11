@@ -1,5 +1,10 @@
 html,
 body {
     background: radial-gradient(circle, rgba(45, 48, 62, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    /* background-image: url(https://cdn.discordapp.com/attachments/707022094235467842/1036079192409919538/YabaiPose2.png); */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-attachment: fixed;
     color: white;
 }

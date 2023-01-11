@@ -22,3 +22,27 @@ para executar
 ORDEM DE CONSTRUÇÃO DO SISTEMA:
 - pages > componentes > api 
 - situacional component App()
+
+
+## ## ## ## ## ## ## ## ## ## ## IDEIAS DE IMPLEMENTAÇÕES ## ## ## ## ## ## ## ## ## ## ##
+
+- CRIAR UMA TELA DE DASHBOARD
+- CRIAR UMA TELA DE TAREFAS
+- CRIAR UMA TELA DE EMPRESA (componente inserir imagem - logo da empresa)
+- CRIAR UMA TELA DE LOGIN
+
+## ## ## ## ## ## ## ## ## ## ## REFERÊNCIAS ## ## ## ## ## ## ## ## ## ## ##
+
+VERIFICAR:
+// https://dev.to/crackingdemon/register-and-login-system-in-mern-stack-1n98
+// https://medium.com/@brendt_bly/simple-mern-passport-app-tutorial-4aec2105e367 (PASSPORT.JS)
+// https://www.youtube.com/watch?v=KFTH8BhR27I (PASSPORT.JS)
+https://medium.com/@prashantramnyc/node-js-with-passport-authentication-simplified-76ca65ee91e5 (PASSPORT.JS)
+https://www.passportjs.org/concepts/authentication/password/ (PASSPORT.JS)
+https://github.com/nemo0/passport-mongo-auth/blob/main/routes/router.js (PASSPORT.JS)
+https://blog.logrocket.com/using-passport-authentication-node-js/ (PASSPORT.JS)
+https://stackoverflow.com/questions/44718947/passport-local-mongoose-createstrategy-is-not-a-function-authenticate-is-not
+
+LINKS UTILIZADOS
+// https://dev.to/darkmavis1980/fetching-data-with-react-hooks-and-axios-114h 
+// https://akashhamirwasia.com/blog/building-expressive-confirm-dialog-api-in-react/ (Modal)
